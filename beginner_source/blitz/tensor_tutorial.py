@@ -116,6 +116,7 @@ if torch.cuda.is_available():
 #
 
 ###############################################################
+# INFO: Done
 # **Standard numpy-like indexing and slicing:**
 
 tensor = torch.ones(4, 4)
@@ -123,6 +124,7 @@ tensor[:,1] = 0
 print(tensor)
 
 ######################################################################
+# INFO: Done
 # **Joining tensors** You can use ``torch.cat`` to concatenate a sequence of tensors along a given dimension.
 # See also `torch.stack <https://pytorch.org/docs/stable/generated/torch.stack.html>`__,
 # another tensor joining op that is subtly different from ``torch.cat``.
@@ -130,6 +132,7 @@ t1 = torch.cat([tensor, tensor, tensor], dim=1)
 print(t1)
 
 ######################################################################
+# INFO: Done
 # **Multiplying tensors**
 
 # This computes the element-wise product
@@ -138,6 +141,7 @@ print(f"tensor.mul(tensor) \n {tensor.mul(tensor)} \n")
 print(f"tensor * tensor \n {tensor * tensor}")
 
 ######################################################################
+# INFO: Done
 #
 # This computes the matrix multiplication between two tensors
 print(f"tensor.matmul(tensor.T) \n {tensor.matmul(tensor.T)} \n")
@@ -146,6 +150,7 @@ print(f"tensor @ tensor.T \n {tensor @ tensor.T}")
 
 
 ######################################################################
+# INFO: Done
 # **In-place operations**
 # Operations that have a ``_`` suffix are in-place. For example: ``x.copy_(y)``, ``x.t_()``, will change ``x``.
 
