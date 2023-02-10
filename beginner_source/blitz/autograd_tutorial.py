@@ -31,6 +31,7 @@ of backprop, check out this `video from
 
 
 
+# INFO: Done
 Usage in PyTorch
 ~~~~~~~~~~~~~~~~
 Let's take a look at a single training step.
@@ -50,6 +51,7 @@ data = torch.rand(1, 3, 64, 64)
 labels = torch.rand(1, 1000)
 
 ############################################################
+# INFO: Done
 # Next, we run the input data through the model through each of its layers to make a prediction.
 # This is the **forward pass**.
 #
@@ -57,6 +59,7 @@ labels = torch.rand(1, 1000)
 prediction = model(data) # forward pass
 
 ############################################################
+# INFO: Done
 # We use the model's prediction and the corresponding label to calculate the error (``loss``).
 # The next step is to backpropagate this error through the network.
 # Backward propagation is kicked off when we call ``.backward()`` on the error tensor.
@@ -67,6 +70,7 @@ loss = (prediction - labels).sum()
 loss.backward() # backward pass
 
 ############################################################
+# INFO: Done
 # Next, we load an optimizer, in this case SGD with a learning rate of 0.01 and `momentum <https://towardsdatascience.com/stochastic-gradient-descent-with-momentum-a84097641a5d>`__ of 0.9.
 # We register all the parameters of the model in the optimizer.
 #

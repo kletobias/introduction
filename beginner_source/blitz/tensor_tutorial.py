@@ -159,6 +159,7 @@ tensor.add_(5)
 print(tensor)
 
 ######################################################################
+# INFO: Done
 # .. note::
 #      In-place operations save some memory, but can be problematic when computing derivatives because of an immediate loss
 #      of history. Hence, their use is discouraged.
@@ -169,6 +170,7 @@ print(tensor)
 
 
 ######################################################################
+# INFO: Done
 # .. _bridge-to-np-label:
 #
 # Bridge with NumPy
@@ -178,6 +180,7 @@ print(tensor)
 
 
 ######################################################################
+# INFO: Done
 # Tensor to NumPy array
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 t = torch.ones(5)
@@ -186,6 +189,7 @@ n = t.numpy()
 print(f"n: {n}")
 
 ######################################################################
+# INFO: Done
 # A change in the tensor reflects in the NumPy array.
 
 t.add_(1)
@@ -194,12 +198,14 @@ print(f"n: {n}")
 
 
 ######################################################################
+# INFO: Done
 # NumPy array to Tensor
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 n = np.ones(5)
 t = torch.from_numpy(n)
 
 ######################################################################
+# INFO: Done
 # Changes in the NumPy array reflects in the tensor.
 np.add(n, 1, out=n)
 print(f"t: {t}")

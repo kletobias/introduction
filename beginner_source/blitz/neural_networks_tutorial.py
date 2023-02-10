@@ -35,6 +35,7 @@ A typical training procedure for a neural network is as follows:
 Define the network
 ------------------
 
+# INFO: Done
 Let’s define this network:
 """
 import torch
