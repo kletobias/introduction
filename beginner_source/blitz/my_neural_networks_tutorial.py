@@ -32,4 +32,55 @@ class Net(nn.Module):
         return x
 
 net = Net()
-print(net)
+print(f'Net: {net}')
+print(f'Learnable parameters: \n {list(net.parameters())} \n')
+params = list(net.parameters())
+print(f'Len of parameters \n {len(params)} \n')
+print(f'conv1\'s weights \n {params[0].size()} \n')
+
+# %% [markdown]
+# Expected input size for this **LeNet** is 32 x 32
+# 
+# `net` expects a 4D tensor with dimensions:
+#
+# ```
+# nSamples x nChannels x Height x Width
+# ```
+# 
+# For single input sample use `input.unsqueeze(0)`.
+# %%
+
+input = torch.randn(1,1,32,32)
+print(f'input: {input.shape}')
+out = net(input)
+print(f'output: {out}')
+print(f'shape of output {out.shape}')
+# %% [markdown]
+# Zero the gradient buffers of all parameters and backprops with random
+# gradients:
+# 
+# %%
+
+net.zero_grad()
+out.backward(torch.randn(1,10))
+
+# %% [markdown]
+# ### Loss Function
+# A loss function takes (output, target) pair of inputs and computes a value
+# that estimates how far away the output is from the target. The `nn` module has
+# several different loss functions to choose from.
+#
+# %%
+
+output = net(input)
+target = torch.randn(10)
+target = target.view(1,-1)
+ll = nn.MSELoss() # INFO: First define like this!
+lss = ll(output,target) # INFO: Then compute loss
+print(f'Loss is: \n {lss} \n')
+
+print(f'lss.grad_fn \n {lss.grad_fn} \n')
+print(f'lss.grad_fn.next_functions[0][0] \n {lss.grad_fn.next_functions[0][0]} \n')
+print(f'lss.grad_fn.next_functions[0][0].... \n {lss.grad_fn.next_functions[0][0].next_functions[0][0]} \n') #ReLU
+
+
