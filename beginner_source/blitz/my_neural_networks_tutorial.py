@@ -52,10 +52,18 @@ print(f'conv1\'s weights \n {params[0].size()} \n')
 
 input = torch.randn(1,1,32,32)
 print(f'input: {input.shape}')
+print(f'input [1,1,:4,:4] \n {input[0,0,:4,:4]} \n')
+
 out = net(input)
 print(f'output: {out}')
 print(f'shape of output {out.shape}')
 # %% [markdown]
+#
+# ```
+# input -> conv2d -> ReLU -> max_pool2d -> conv2d -> ReLU -> max_pool2d ->
+# flatten -> linear -> ReLU -> linear -> ReLU -> linear -> MSELoss -> loss
+# ```
+#
 # Zero the gradient buffers of all parameters and backprops with random
 # gradients:
 # 
@@ -76,11 +84,49 @@ output = net(input)
 target = torch.randn(10)
 target = target.view(1,-1)
 ll = nn.MSELoss() # INFO: First define like this!
-lss = ll(output,target) # INFO: Then compute loss
-print(f'Loss is: \n {lss} \n')
+loss = ll(output,target) # INFO: Then compute loss
+print(f'Loss is: \n {loss} \n')
 
-print(f'lss.grad_fn \n {lss.grad_fn} \n')
-print(f'lss.grad_fn.next_functions[0][0] \n {lss.grad_fn.next_functions[0][0]} \n')
-print(f'lss.grad_fn.next_functions[0][0].... \n {lss.grad_fn.next_functions[0][0].next_functions[0][0]} \n') #ReLU
+print(f'loss.grad_fn \n {loss.grad_fn} \n') #MSELoss
+print(f'loss.grad_fn.next_functions[0][0] \n {loss.grad_fn.next_functions[0][0]} \n') #Linear
+print(f'loss.grad_fn.next_functions[0][0].... \n {loss.grad_fn.next_functions[0][0].next_functions[0][0]} \n') #ReLU
+
+# %%
+net.zero_grad()
+print(f'conv1\'s bias.grad looks like before the backward function: \n {net.conv1.bias.grad} \n')
+print(f'conv1\'s weight.grad looks like before the backward function: \n {net.conv1.weight.grad} \n')
+loss.backward()
+print(f'conv1\'s bias.grad looks like after the backward function: \n {net.conv1.bias.grad} \n')
+print(f'conv1\'s weight.grad looks like after the backward function: \n {net.conv1.weight.grad} \n')
+print(f'conv2\'s weight.grad looks like after the backward function: \n {net.conv2.weight.grad} \n')
+
+# %% [markdown]
+# ### Updating The Weights
+# 
+#    weight = weight - lr * gradient
+# %%
+lr = 1e-2
+for p in net.parameters():
+    p.data.sub_(p.grad.data * lr)
+
+# %% [markdown]
+# ### Using torch.optim for optimization
+# 
+# 
+#
+# %%
+
+import torch.optim as optim
+# Creation
+optimizer = optim.SGD(net.parameters(), lr=1e-2)
+
+# Application
+optimizer.zero_grad() # zero gradient buffers
+out = net(input)
+criterion = nn.MSELoss()
+loss = criterion(out,target)
+loss.backward()
+optimizer.step() # Update step
+
 
 

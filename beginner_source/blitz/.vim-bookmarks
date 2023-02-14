@@ -1,3 +1,3 @@
 let l:bm_file_version = 1
-let l:bm_sessions = {'default': {'/Users/tobias/all_code/projects/python_projects/practice/pytorch/introduction/beginner_source/blitz/my_tensor_tutorial.py': [{'sign_idx': 9500, 'line_nr': 12, 'content': 'dn = torch.from_numpy(data_array)'},],}}
+let l:bm_sessions = {'default': {'/Users/tobias/all_code/projects/python_projects/practice/pytorch/introduction/beginner_source/blitz/my_neural_networks_tutorial.py': [{'sign_idx': 9507, 'line_nr': 107, 'content': '# %%'},{'sign_idx': 9505, 'line_nr': 94, 'content': '# %%'},{'sign_idx': 9504, 'line_nr': 6, 'content': '# %%'},{'sign_idx': 9508, 'line_nr': 108, 'content': 'lr = 1e-2'},{'sign_idx': 9506, 'line_nr': 51, 'content': '# %%'},],'/Users/tobias/all_code/projects/python_projects/practice/pytorch/introduction/beginner_source/blitz/my_tensor_tutorial.py': [{'sign_idx': 9500, 'line_nr': 12, 'content': 'dn = torch.from_numpy(data_array)'},],}}
 let l:bm_current_session = 'default'
