@@ -27,7 +27,19 @@
 import torch as T
 import torchvision as Tv
 import torchvision.transforms as Tr
-device = T.device('mps')
+import torch.backends as backends
+if not backends.mps.is_available():
+    if not backends.mps.is_built():
+        print("MPS not available because the current PyTorch install was not "
+              "built with MPS enabled.")
+    else:
+        print("MPS not available because the current MacOS version is not 12.3+ "
+              "and/or you do not have an MPS-enabled device on this machine.")
+
+else:
+    device = T.device("mps")
+    print(f'device is {device}')
+# %%
 transform = Tr.Compose(
     [Tr.ToTensor(),
      Tr.Normalize((.5,.5,.5), (.5,.5,.5))])
@@ -41,24 +53,23 @@ testloader = T.utils.data.DataLoader(test, batch_size=batch_size, shuffle=False,
 
 classes = ('plane','car','bird','cat','deer','dog','frog','horse','ship','truck')
 
-
 import matplotlib.pyplot as plt
 # plt.style.use('science')
 plt.ion()
 import numpy as np
 
 
-# def imshow(img):
-#     npimg = img.numpy()
-#     plt.imshow(np.transpose(npimg,(1,2,0)))
-#     plt.show()
+def imshow(img):
+    npimg = img.numpy()
+    plt.imshow(np.transpose(npimg,(1,2,0)))
+    plt.show()
 
-# dataiter = iter(trainloader)
-# images, labels = next(dataiter)
+dataiter = iter(trainloader)
+images, labels = next(dataiter)
 
-# imshow(Tv.utils.make_grid(images))
+imshow(Tv.utils.make_grid(images))
 
-# print(' '.join(f'{classes[labels[j]]:5s}' for j in range(batch_size)))
+print(' '.join(f'{classes[labels[j]]:5s}' for j in range(batch_size)))
 
 # %% [markdown]
 # ## Define the CNN
@@ -73,9 +84,9 @@ import torch.nn.functional as F
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = nn.Conv2d(3,6,5) # input size 3, output 6, convolution 5
+        self.conv1 = nn.Conv2d(3,6,5,device=device) # input size 3, output 6, convolution 5
         self.pool = nn.MaxPool2d(2) # square form MaxPool2d with size 2 x 2
-        self.conv2 = nn.Conv2d(6,16,5) # in,out,convolution
+        self.conv2 = nn.Conv2d(6,16,5,device=device) # in,out,convolution
         self.fc1 = nn.Linear(16*5*5, 120)
         self.fc2 = nn.Linear(120,84)
         self.fc3 = nn.Linear(84,10)
